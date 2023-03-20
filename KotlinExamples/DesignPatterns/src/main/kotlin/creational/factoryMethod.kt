@@ -1,4 +1,5 @@
-import java.util.concurrent.atomic.AtomicInteger
+package creational
+
 import java.util.concurrent.atomic.AtomicLong
 
 interface Animal{
