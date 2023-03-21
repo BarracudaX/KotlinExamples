@@ -1,7 +1,7 @@
 package creational
 
 /**
- * Abstract Factory Pattern allows superclass to focus on business logic using some abstraction, while allowing subclass to specify the actual class of the abstraction that is used by the superclass.
+ * Factory Method Pattern allows superclass to focus on business logic using some abstraction, while allowing subclass to specify the actual class of the abstraction that is used by the superclass.
  */
 
 interface Transport{
