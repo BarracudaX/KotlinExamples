@@ -26,7 +26,7 @@ class BadWordsDecorator(private val badWords: Set<String>,private val chat: Chat
         var endMessage = message
 
         for(badWord in badWords){
-            endMessage = message.replace(badWord,"")
+            endMessage = endMessage.replace(badWord,"")
         }
 
         chat.send(endMessage)
@@ -38,11 +38,12 @@ class TimeDecorator(private val chat: Chat) : Chat{
 
     private val durationBetweenMessage = TimeUnit.SECONDS.toNanos(5)
 
-    private var lastTimeSent = System.nanoTime()
+    private var lastTimeSent: Long? = null
 
 
     override fun send(message: String) {
-        val timePassedBetweenNowAndLastMessage = System.nanoTime() - lastTimeSent
+        val now = System.nanoTime()
+        val timePassedBetweenNowAndLastMessage = now - (lastTimeSent ?: (now - durationBetweenMessage))
         if( (timePassedBetweenNowAndLastMessage) < durationBetweenMessage){
             println("You need to wait ${TimeUnit.NANOSECONDS.toSeconds(durationBetweenMessage - timePassedBetweenNowAndLastMessage)} seconds before sending new message.")
         }else{
@@ -51,4 +52,11 @@ class TimeDecorator(private val chat: Chat) : Chat{
         }
     }
 
+}
+
+fun main(){
+    val chat = TimeDecorator(BadWordsDecorator(setOf("banana","bad","EZ"),SimpleChat("John")))
+
+    chat.send("Hello,banana!EZ.")
+    chat.send("How are you doing?")
 }
