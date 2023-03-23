@@ -28,9 +28,13 @@ class GermanyTaxesService : TaxesService{
 
 }
 
-class PaymentService(private val taxesService: TaxesService){
+class PaymentService(private var taxesService: TaxesService){
 
     private val regularPayment = 1000.0
+
+    fun changeTaxesRules(taxesService: TaxesService){
+        this.taxesService = taxesService
+    }
 
     fun getPayment(hours: Int) : Double{
         return if(hours <= 50){
